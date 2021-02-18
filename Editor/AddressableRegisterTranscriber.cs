@@ -1,6 +1,7 @@
 ﻿// Copyright (c) AIR Pty Ltd. All rights reserved.
 
 using System.IO;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
@@ -13,7 +14,7 @@ namespace AIR.AddressableRegister.Editor
         public AddressableRegisterTranscriber(IAssetProvider assetProvider = null) =>
             _assetProvider = assetProvider ?? new AddressableAssetProvider();
 
-        public void GenerateAddressableConsts(string outputFile)
+        public void WriteAddressableRegisterTo(string outputFile)
         {
             string codeStr;
             EditorUtility.DisplayProgressBar("GenerateAddressableConsts", "Gathering all AddressableAssetGroups.", 0);
@@ -48,7 +49,9 @@ namespace AIR.AddressableRegister.Editor
                     continue;
                 }
 
-                foreach (var addressableItem in asset.Entries)
+                var orderedEntries = asset.Entries
+                    .OrderBy(x => x.Address);
+                foreach (var addressableItem in orderedEntries)
                     author.AddEntry(addressableItem, asset.Name);
             }
 

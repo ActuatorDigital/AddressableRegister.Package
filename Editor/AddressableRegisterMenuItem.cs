@@ -13,8 +13,8 @@ namespace AIR.AddressableRegister.Editor
             var outputFileName = locator.FindOutputFile();
 
             var author = new AddressableRegisterTranscriber();
-            author.GenerateAddressableConsts(outputFileName);
-            
+            author.WriteAddressableRegisterTo(outputFileName);
+
             Debug.Log("Updated assets registered in " + outputFileName);
         }
     }
